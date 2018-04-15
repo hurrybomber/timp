@@ -1,0 +1,637 @@
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+yokkidack@yokkidack-VirtualBox:~$ export GITHUB_USERNAME=yokkidack
+yokkidack@yokkidack-VirtualBox:~$ mkdir -p  ${GITHUB_USERNAME}/workspace
+yokkidack@yokkidack-VirtualBox:~$ cd  ${GITHUB_USERNAME}/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ pushd .
+~/yokkidack/workspace ~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd .
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd ..
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ mkdir -p workspace/tasks/
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ mkdir -p workspace/projects/
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ mkdir -p workspace/reports/
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ ls
+workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ cd workspace/
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+--2018-03-19 18:57:15--  https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+Resolving nodejs.org (nodejs.org)... 104.20.22.46, 104.20.23.46, 2400:cb00:2048:1::6814:162e, ...
+Connecting to nodejs.org (nodejs.org)|104.20.22.46|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 9356460 (8,9M) [application/x-xz]
+Saving to: ‘node-v6.11.5-linux-x64.tar.xz’
+
+node-v6.11.5-linux- 100%[===================>]   8,92M  47,7KB/s    in 3m 42s  
+
+2018-03-19 19:00:58 (41,2 KB/s) - ‘node-v6.11.5-linux-x64.tar.xz’ saved [9356460/9356460]
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ tar -xf node-v6.11.5-linux-x64.tar.xz
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ rm -rf node-v6.11.5-linux-x64.tar.xz
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ mv node-v6.11.5-linux-x64 node
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ ls node/bin 
+node  npm
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ echo ${PATH}
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cat > scripts/activate<<EOF
+> export PATH=\${PATH}:`pwd`/node/bin
+> EOF
+bash: scripts/activate: No such file or directory
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ mkdir scripts
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ export PATH=${PATH}:`pwd`/node/bin
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cat > scripts/activate<<EOF
+> export PATH=\${PATH}:`pwd`/node/bin
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ source scripts/activate
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ npm install -g gistup
+/home/yokkidack/yokkidack/workspace/node/bin/gistup -> /home/yokkidack/yokkidack/workspace/node/lib/node_modules/gistup/bin/gistup
+/home/yokkidack/yokkidack/workspace/node/bin/gistup-open -> /home/yokkidack/yokkidack/workspace/node/lib/node_modules/gistup/bin/gistup-open
+/home/yokkidack/yokkidack/workspace/node/bin/gistup-rename -> /home/yokkidack/yokkidack/workspace/node/lib/node_modules/gistup/bin/gistup-rename
+/home/yokkidack/yokkidack/workspace/node/lib
+└─┬ gistup@0.1.3 
+  ├─┬ optimist@0.3.7 
+  │ └── wordwrap@0.0.3 
+  └── queue-async@1.2.1 
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ ls node/bin
+gistup  gistup-open  gistup-rename  node  npm
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cat > ~/.gistup.json <<EOF> {
+>   "token": "${GIST_TOKEN}"
+> }
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ pushd .
+~/yokkidack/workspace ~/yokkidack/workspace ~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ source scripts/activate
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/${GITHUB_USERNAME}/lab03.git projects/lab04
+The program 'git' is currently not installed. You can install it by typing:
+sudo apt install git
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ sudo apt install git
+[sudo] password for yokkidack: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  git-man liberror-perl
+Suggested packages:
+  git-daemon-run | git-daemon-sysvinit git-doc git-el git-email git-gui gitk
+  gitweb git-cvs git-mediawiki git-svn
+The following NEW packages will be installed:
+  git git-man liberror-perl
+0 upgraded, 3 newly installed, 0 to remove and 105 not upgraded.
+Need to get 3 943 kB of archives.
+After this operation, 30,4 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 liberror-perl all 0.17024-1 [23,0 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 git-man all 1:2.14.1-1ubuntu4 [790 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 git amd64 1:2.14.1-1ubuntu4 [3 130 kB]
+Fetched 3 943 kB in 1s (3 190 kB/s)
+Selecting previously unselected package liberror-perl.
+(Reading database ... 112204 files and directories currently installed.)
+Preparing to unpack .../liberror-perl_0.17024-1_all.deb ...
+Unpacking liberror-perl (0.17024-1) ...
+Selecting previously unselected package git-man.
+Preparing to unpack .../git-man_1%3a2.14.1-1ubuntu4_all.deb ...
+Unpacking git-man (1:2.14.1-1ubuntu4) ...
+Selecting previously unselected package git.
+Preparing to unpack .../git_1%3a2.14.1-1ubuntu4_amd64.deb ...
+Unpacking git (1:2.14.1-1ubuntu4) ...
+Setting up git-man (1:2.14.1-1ubuntu4) ...
+Setting up liberror-perl (0.17024-1) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+Setting up git (1:2.14.1-1ubuntu4) ...
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/${GITHUB_USERNAME}/lab03.git projects/lab04
+Cloning into 'projects/lab04'...
+remote: Counting objects: 19, done.
+remote: Compressing objects: 100% (13/13), done.
+remote: Total 19 (delta 1), reused 12 (delta 0), pack-reused 0
+Unpacking objects: 100% (19/19), done.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd projects/lab04
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git remote remove origin
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab04.git
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ g++ -I./include -std=c++11 -c sources/print.cpp
+The program 'g++' is currently not installed. You can install it by typing:
+sudo apt install g++
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ sudo apt install g++
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu cpp-7 g++-7 gcc gcc-7
+  gcc-7-base libasan4 libatomic1 libbinutils libc-dev-bin libc6 libc6-dev
+  libcc1-0 libcilkrts5 libgcc-7-dev libgcc1 libgomp1 libitm1 liblsan0 libmpx2
+  libquadmath0 libstdc++-7-dev libstdc++6 libtsan0 libubsan0 linux-libc-dev
+  manpages-dev
+Suggested packages:
+  binutils-doc gcc-7-locales g++-multilib g++-7-multilib gcc-7-doc
+  libstdc++6-7-dbg gcc-multilib make autoconf automake libtool flex bison gdb
+  gcc-doc gcc-7-multilib libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg
+  libasan4-dbg liblsan0-dbg libtsan0-dbg libubsan0-dbg libcilkrts5-dbg
+  libmpx2-dbg libquadmath0-dbg glibc-doc libstdc++-7-doc
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu g++ g++-7 gcc gcc-7
+  libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5
+  libgcc-7-dev libitm1 liblsan0 libmpx2 libstdc++-7-dev libtsan0 libubsan0
+  linux-libc-dev manpages-dev
+The following packages will be upgraded:
+  cpp-7 gcc-7-base libc6 libgcc1 libgomp1 libquadmath0 libstdc++6
+7 upgraded, 23 newly installed, 0 to remove and 98 not upgraded.
+Need to get 28,1 MB/38,3 MB of archives.
+After this operation, 127 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 binutils-common amd64 2.29.1-4ubuntu1 [190 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 libbinutils amd64 2.29.1-4ubuntu1 [502 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 binutils-x86-64-linux-gnu amd64 2.29.1-4ubuntu1 [1 824 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 binutils amd64 2.29.1-4ubuntu1 [3 342 B]
+Get:5 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libcc1-0 amd64 7.2.0-8ubuntu3.2 [38,7 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libitm1 amd64 7.2.0-8ubuntu3.2 [27,6 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libatomic1 amd64 7.2.0-8ubuntu3.2 [8 950 B]
+Get:8 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libasan4 amd64 7.2.0-8ubuntu3.2 [360 kB]
+Get:9 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 liblsan0 amd64 7.2.0-8ubuntu3.2 [133 kB]
+Get:10 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libtsan0 amd64 7.2.0-8ubuntu3.2 [282 kB]
+Get:11 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libubsan0 amd64 7.2.0-8ubuntu3.2 [126 kB]
+Get:12 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libcilkrts5 amd64 7.2.0-8ubuntu3.2 [42,6 kB]
+Get:13 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libmpx2 amd64 7.2.0-8ubuntu3.2 [11,7 kB]
+Get:14 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libgcc-7-dev amd64 7.2.0-8ubuntu3.2 [2 368 kB]
+Get:15 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 gcc-7 amd64 7.2.0-8ubuntu3.2 [7 418 kB]
+Get:16 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 gcc amd64 4:7.2.0-1ubuntu1 [5 124 B]
+Get:17 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libc-dev-bin amd64 2.26-0ubuntu2.1 [69,5 kB]
+Get:18 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 linux-libc-dev amd64 4.13.0-37.42 [951 kB]
+Get:19 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libc6-dev amd64 2.26-0ubuntu2.1 [2 526 kB]
+Get:20 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 libstdc++-7-dev amd64 7.2.0-8ubuntu3.2 [1 456 kB]
+Get:21 http://ru.archive.ubuntu.com/ubuntu artful-updates/main amd64 g++-7 amd64 7.2.0-8ubuntu3.2 [7 555 kB]          
+Get:22 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 g++ amd64 4:7.2.0-1ubuntu1 [1 482 B]                     
+Get:23 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 manpages-dev all 4.13-3 [2 202 kB]                       
+Fetched 28,1 MB in 10s (2 794 kB/s)                                                                                   
+Preconfiguring packages ...
+(Reading database ... 113087 files and directories currently installed.)
+Preparing to unpack .../gcc-7-base_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking gcc-7-base:amd64 (7.2.0-8ubuntu3.2) over (7.2.0-8ubuntu3) ...
+Setting up gcc-7-base:amd64 (7.2.0-8ubuntu3.2) ...
+(Reading database ... 113087 files and directories currently installed.)
+Preparing to unpack .../libstdc++6_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libstdc++6:amd64 (7.2.0-8ubuntu3.2) over (7.2.0-8ubuntu3) ...
+Setting up libstdc++6:amd64 (7.2.0-8ubuntu3.2) ...
+(Reading database ... 113087 files and directories currently installed.)
+Preparing to unpack .../libquadmath0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libquadmath0:amd64 (7.2.0-8ubuntu3.2) over (7.2.0-8ubuntu3) ...
+Preparing to unpack .../libgomp1_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libgomp1:amd64 (7.2.0-8ubuntu3.2) over (7.2.0-8ubuntu3) ...
+Preparing to unpack .../cpp-7_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking cpp-7 (7.2.0-8ubuntu3.2) over (7.2.0-8ubuntu3) ...
+Preparing to unpack .../libgcc1_1%3a7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libgcc1:amd64 (1:7.2.0-8ubuntu3.2) over (1:7.2.0-8ubuntu3) ...
+Setting up libgcc1:amd64 (1:7.2.0-8ubuntu3.2) ...
+(Reading database ... 113087 files and directories currently installed.)
+Preparing to unpack .../libc6_2.26-0ubuntu2.1_amd64.deb ...
+Unpacking libc6:amd64 (2.26-0ubuntu2.1) over (2.26-0ubuntu2) ...
+Setting up libc6:amd64 (2.26-0ubuntu2.1) ...
+Selecting previously unselected package binutils-common:amd64.
+(Reading database ... 113087 files and directories currently installed.)
+Preparing to unpack .../00-binutils-common_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking binutils-common:amd64 (2.29.1-4ubuntu1) ...
+Selecting previously unselected package libbinutils:amd64.
+Preparing to unpack .../01-libbinutils_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking libbinutils:amd64 (2.29.1-4ubuntu1) ...
+Selecting previously unselected package binutils-x86-64-linux-gnu.
+Preparing to unpack .../02-binutils-x86-64-linux-gnu_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking binutils-x86-64-linux-gnu (2.29.1-4ubuntu1) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../03-binutils_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking binutils (2.29.1-4ubuntu1) ...
+Selecting previously unselected package libcc1-0:amd64.
+Preparing to unpack .../04-libcc1-0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libcc1-0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libitm1:amd64.
+Preparing to unpack .../05-libitm1_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libitm1:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libatomic1:amd64.
+Preparing to unpack .../06-libatomic1_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libatomic1:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libasan4:amd64.
+Preparing to unpack .../07-libasan4_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libasan4:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package liblsan0:amd64.
+Preparing to unpack .../08-liblsan0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking liblsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libtsan0:amd64.
+Preparing to unpack .../09-libtsan0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libtsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libubsan0:amd64.
+Preparing to unpack .../10-libubsan0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libubsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libcilkrts5:amd64.
+Preparing to unpack .../11-libcilkrts5_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libcilkrts5:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libmpx2:amd64.
+Preparing to unpack .../12-libmpx2_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libmpx2:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libgcc-7-dev:amd64.
+Preparing to unpack .../13-libgcc-7-dev_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libgcc-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package gcc-7.
+Preparing to unpack .../14-gcc-7_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking gcc-7 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package gcc.
+Preparing to unpack .../15-gcc_4%3a7.2.0-1ubuntu1_amd64.deb ...
+Unpacking gcc (4:7.2.0-1ubuntu1) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../16-libc-dev-bin_2.26-0ubuntu2.1_amd64.deb ...
+Unpacking libc-dev-bin (2.26-0ubuntu2.1) ...
+Selecting previously unselected package linux-libc-dev:amd64.
+Preparing to unpack .../17-linux-libc-dev_4.13.0-37.42_amd64.deb ...
+Unpacking linux-libc-dev:amd64 (4.13.0-37.42) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../18-libc6-dev_2.26-0ubuntu2.1_amd64.deb ...
+Unpacking libc6-dev:amd64 (2.26-0ubuntu2.1) ...
+Selecting previously unselected package libstdc++-7-dev:amd64.
+Preparing to unpack .../19-libstdc++-7-dev_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libstdc++-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package g++-7.
+Preparing to unpack .../20-g++-7_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking g++-7 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../21-g++_4%3a7.2.0-1ubuntu1_amd64.deb ...
+Unpacking g++ (4:7.2.0-1ubuntu1) ...
+Selecting previously unselected package manpages-dev.
+Preparing to unpack .../22-manpages-dev_4.13-3_all.deb ...
+Unpacking manpages-dev (4.13-3) ...
+Setting up libquadmath0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libgomp1:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libatomic1:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libcc1-0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libasan4:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libcilkrts5:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libubsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libtsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up linux-libc-dev:amd64 (4.13.0-37.42) ...
+Setting up cpp-7 (7.2.0-8ubuntu3.2) ...
+Setting up liblsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up binutils-common:amd64 (2.29.1-4ubuntu1) ...
+Setting up libmpx2:amd64 (7.2.0-8ubuntu3.2) ...
+Processing triggers for libc-bin (2.26-0ubuntu2) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+Setting up libc-dev-bin (2.26-0ubuntu2.1) ...
+Setting up manpages-dev (4.13-3) ...
+Setting up libc6-dev:amd64 (2.26-0ubuntu2.1) ...
+Setting up libitm1:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libbinutils:amd64 (2.29.1-4ubuntu1) ...
+Setting up libgcc-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libstdc++-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up binutils-x86-64-linux-gnu (2.29.1-4ubuntu1) ...
+Setting up binutils (2.29.1-4ubuntu1) ...
+Setting up gcc-7 (7.2.0-8ubuntu3.2) ...
+Setting up g++-7 (7.2.0-8ubuntu3.2) ...
+Setting up gcc (4:7.2.0-1ubuntu1) ...
+Setting up g++ (4:7.2.0-1ubuntu1) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Processing triggers for libc-bin (2.26-0ubuntu2) ...
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ g++ -I./include -std=c++11 -c sources/print.cpp
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ ls print.o
+print.o
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ nm print.o | grep print
+0000000000000095 t _GLOBAL__sub_I__Z5printRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSo
+0000000000000000 T _Z5printRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSo
+0000000000000026 T _Z5printRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt14basic_ofstreamIcS2_E
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ ar rvs print.a print.o
+ar: creating print.a
+a - print.o
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ file print.a
+print.a: current ar archive
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ g++ -I./include -std=c++11 -c examples/example1.cpp
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ ls example1.o
+example1.o
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ g++ example1.o print.a -o example1
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ ./example1 && echo
+hello
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ g++ -I./include -std=c++11 -c examples/example2.cpp
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ nm example2.o
+                 U __cxa_atexit
+                 U __dso_handle
+0000000000000000 V DW.ref.__gxx_personality_v0
+                 U _GLOBAL_OFFSET_TABLE_
+000000000000016f t _GLOBAL__sub_I_main
+                 U __gxx_personality_v0
+0000000000000000 T main
+                 U __stack_chk_fail
+                 U _Unwind_Resume
+0000000000000126 t _Z41__static_initialization_and_destruction_0ii
+                 U _Z5printRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt14basic_ofstreamIcS2_E
+                 U _ZNSaIcEC1Ev
+                 U _ZNSaIcED1Ev
+                 U _ZNSt14basic_ofstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode
+                 U _ZNSt14basic_ofstreamIcSt11char_traitsIcEED1Ev
+                 U _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1EPKcRKS3_
+                 U _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED1Ev
+                 U _ZNSt8ios_base4InitC1Ev
+                 U _ZNSt8ios_base4InitD1Ev
+0000000000000000 r _ZStL19piecewise_construct
+0000000000000000 b _ZStL8__ioinit
+0000000000000000 W _ZStorSt13_Ios_OpenmodeS_
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ g++ example2.o print.a -o example2
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ ./example2
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat log.txt && echo
+hello
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ rm -rf example1.o example2.o print.o 
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ rm -rf print.a 
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ rm -rf example1 example2
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ rm -rf log.txt
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat > CMakeLists.txt <<EOF
+> cmake_minimum_required(VERSION 3.0)
+> project(print)
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat >> CMakeLists.txt <<EOF
+> set(CMAKE_CXX_STANDARD 11)
+> set(CMAKE_CXX_STANDARD_REQUIRED ON)
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat >> CMakeLists.txt <<EOF
+> add_library(print STATIC \${CMAKE_CURRENT_SOURCE_DIR}/sources/print.cpp)
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat >> CMakeLists.txt <<EOF
+> include_directories(\${CMAKE_CURRENT_SOURCE_DIR}/include)
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake -H. -B_build
+The program 'cmake' is currently not installed. You can install it by typing:
+sudo apt install cmake
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ sudo apt install cmake
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  cmake-data libjsoncpp1 librhash0 libuv1 make
+Suggested packages:
+  ninja-build make-doc
+The following NEW packages will be installed:
+  cmake cmake-data libjsoncpp1 librhash0 libuv1 make
+0 upgraded, 6 newly installed, 0 to remove and 98 not upgraded.
+Need to get 4 746 kB of archives.
+After this operation, 24,5 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 cmake-data all 3.9.1-1 [1 276 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 libjsoncpp1 amd64 1.7.4-3 [73,6 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 librhash0 amd64 1.3.4-3 [77,0 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 libuv1 amd64 1.9.1-3 [58,6 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 cmake amd64 3.9.1-1 [3 107 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 make amd64 4.1-9.1 [154 kB]
+Fetched 4 746 kB in 1s (2 895 kB/s)
+Selecting previously unselected package cmake-data.
+(Reading database ... 117967 files and directories currently installed.)
+Preparing to unpack .../0-cmake-data_3.9.1-1_all.deb ...
+Unpacking cmake-data (3.9.1-1) ...
+Selecting previously unselected package libjsoncpp1:amd64.
+Preparing to unpack .../1-libjsoncpp1_1.7.4-3_amd64.deb ...
+Unpacking libjsoncpp1:amd64 (1.7.4-3) ...
+Selecting previously unselected package librhash0.
+Preparing to unpack .../2-librhash0_1.3.4-3_amd64.deb ...
+Unpacking librhash0 (1.3.4-3) ...
+Selecting previously unselected package libuv1:amd64.
+Preparing to unpack .../3-libuv1_1.9.1-3_amd64.deb ...
+Unpacking libuv1:amd64 (1.9.1-3) ...
+Selecting previously unselected package cmake.
+Preparing to unpack .../4-cmake_3.9.1-1_amd64.deb ...
+Unpacking cmake (3.9.1-1) ...
+Selecting previously unselected package make.
+Preparing to unpack .../5-make_4.1-9.1_amd64.deb ...
+Unpacking make (4.1-9.1) ...
+Setting up make (4.1-9.1) ...
+Setting up libuv1:amd64 (1.9.1-3) ...
+Setting up cmake-data (3.9.1-1) ...
+Setting up librhash0 (1.3.4-3) ...
+Processing triggers for libc-bin (2.26-0ubuntu2) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+Setting up libjsoncpp1:amd64 (1.7.4-3) ...
+Setting up cmake (3.9.1-1) ...
+Processing triggers for libc-bin (2.26-0ubuntu2) ...
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake -H. -B_build
+-- The C compiler identification is GNU 7.2.0
+-- The CXX compiler identification is GNU 7.2.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/yokkidack/yokkidack/workspace/projects/lab04/_build
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake --build _build
+Scanning dependencies of target print
+[ 50%] Building CXX object CMakeFiles/print.dir/sources/print.cpp.o
+[100%] Linking CXX static library libprint.a
+[100%] Built target print
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat >> CMakeLists.txt <<EOF
+> add_executable(example1 \${CMAKE_CURRENT_SOURCE_DIR}/examples/example1.cpp)
+> add_executable(example2 \${CMAKE_CURRENT_SOURCE_DIR}/examples/example2.cpp)
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat >> CMakeLists.txt <<EOF
+> target_link_libraries(example1 print)
+> target_link_libraries(example2 print)
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake --build _build
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/yokkidack/yokkidack/workspace/projects/lab04/_build
+[ 33%] Built target print
+Scanning dependencies of target example2
+[ 50%] Building CXX object CMakeFiles/example2.dir/examples/example2.cpp.o
+[ 66%] Linking CXX executable example2
+[ 66%] Built target example2
+Scanning dependencies of target example1
+[ 83%] Building CXX object CMakeFiles/example1.dir/examples/example1.cpp.o
+[100%] Linking CXX executable example1
+[100%] Built target example1
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake --build _build --target print
+[100%] Built target print
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake --build _build --target example1
+[ 50%] Built target print
+[100%] Built target example1
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake --build _build --target example2
+[ 50%] Built target print
+[100%] Built target example2
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ ls -la _build/libprint.a
+-rw-rw-r-- 1 yokkidack yokkidack 3126 мар 19 19:14 _build/libprint.a
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ _build/example1 && echo
+hello
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ _build/example2
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat log.txt && echo
+hello
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ rm -rf log.txt
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git clone https://github.com/tp-labs/lab04 tmp
+Cloning into 'tmp'...
+remote: Counting objects: 37, done.
+remote: Total 37 (delta 0), reused 0 (delta 0), pack-reused 37
+Unpacking objects: 100% (37/37), done.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ mv -f tmp/CMakeLists.txt .
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ rm -rf tmp
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cat CMakeLists.txt
+cmake_minimum_required(VERSION 3.0)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+option(BUILD_EXAMPLES "Build examples" OFF)
+
+project(print)
+
+add_library(print STATIC ${CMAKE_CURRENT_SOURCE_DIR}/sources/print.cpp)
+
+target_include_directories(print PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+if(BUILD_EXAMPLES)
+  file(GLOB EXAMPLE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/examples/*.cpp")
+  foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
+    get_filename_component(EXAMPLE_NAME ${EXAMPLE_SOURCE} NAME_WE)
+    add_executable(${EXAMPLE_NAME} ${EXAMPLE_SOURCE})
+    target_link_libraries(${EXAMPLE_NAME} print)
+    install(TARGETS ${EXAMPLE_NAME}
+      RUNTIME DESTINATION bin
+    )
+  endforeach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
+endif()
+
+install(TARGETS print
+    EXPORT print-config
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION include)
+install(EXPORT print-config DESTINATION cmake)
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/yokkidack/yokkidack/workspace/projects/lab04/_build
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ cmake --build _build --target install
+[100%] Built target print
+Install the project...
+-- Install configuration: ""
+-- Installing: /home/yokkidack/yokkidack/workspace/projects/lab04/_install/lib/libprint.a
+-- Installing: /home/yokkidack/yokkidack/workspace/projects/lab04/_install/include
+-- Installing: /home/yokkidack/yokkidack/workspace/projects/lab04/_install/include/print.hpp
+-- Installing: /home/yokkidack/yokkidack/workspace/projects/lab04/_install/cmake/print-config.cmake
+-- Installing: /home/yokkidack/yokkidack/workspace/projects/lab04/_install/cmake/print-config-noconfig.cmake
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ tree _install
+The program 'tree' is currently not installed. You can install it by typing:
+sudo apt install tree
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ sudo apt install tree
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  tree
+0 upgraded, 1 newly installed, 0 to remove and 98 not upgraded.
+Need to get 40,7 kB of archives.
+After this operation, 105 kB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu artful/universe amd64 tree amd64 1.7.0-5 [40,7 kB]
+Fetched 40,7 kB in 0s (506 kB/s)
+Selecting previously unselected package tree.
+(Reading database ... 120309 files and directories currently installed.)
+Preparing to unpack .../tree_1.7.0-5_amd64.deb ...
+Unpacking tree (1.7.0-5) ...
+Setting up tree (1.7.0-5) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ tree _install
+_install
+├── cmake
+│   ├── print-config.cmake
+│   └── print-config-noconfig.cmake
+├── include
+│   └── print.hpp
+└── lib
+    └── libprint.a
+
+3 directories, 4 files
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git add CMakeLists.txt
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git commit -m"added CMakeLists.txt"
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'yokkidack@yokkidack-VirtualBox.(none)')
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git  config --global user.email "mosgreyday@gmail.com"
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git  config --global user.name "yokkidack"
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git commit -m"added CMakeLists.txt"[master 1f813de] added CMakeLists.txt
+ 1 file changed, 36 insertions(+)
+ create mode 100644 CMakeLists.txt
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ git push origin master
+Username for 'https://github.com': yokkidack
+Password for 'https://yokkidack@github.com': 
+Counting objects: 22, done.
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (22/22), 3.64 KiB | 3.64 MiB/s, done.
+Total 22 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/yokkidack/lab04.git
+ * [new branch]      master -> master
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab04$ popd
+~/yokkidack/workspace ~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ export LAB_NUMBER=04
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+Cloning into 'tasks/lab04'...
+remote: Counting objects: 37, done.
+Unpacking objects: 100% (37/37), done.
+remote: Total 37 (delta 0), reused 0 (delta 0), pack-reused 37
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ mkdir reports/lab${LAB_NUMBER}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd reports/lab${LAB_NUMBER}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab04$ gistup
+Initialized empty Git repository in /home/yokkidack/yokkidack/workspace/reports/lab04/.git/
+[master (root-commit) 49c6958] Initial gistup commit.
+ 1 file changed, 165 insertions(+)
+ create mode 100644 REPORT.md
+/home/yokkidack/yokkidack/workspace/node/lib/node_modules/gistup/lib/gistup/unless.js:11
+    throw error;
+    ^
+
+Error: invalid gist id: undefined
+    at /home/yokkidack/yokkidack/workspace/node/lib/node_modules/gistup/bin/gistup:169:67
+    at IncomingMessage.<anonymous> (/home/yokkidack/yokkidack/workspace/node/lib/node_modules/gistup/lib/gistup/api.js:28:7)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab04$ ls
+REPORT.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab04$ cd ..
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports$ cd ..
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ ls
+node  projects  reports  scripts  tasks
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ ls node/bin
+gistup  gistup-open  gistup-rename  node  npm
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cat > ~/.gistup.json <<EOF
+> {
+> "token": "8483ebda6dd22067ed1d545fba7f54d9767fe64c"
+> }
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ alias edit=nano
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ ls
+node  projects  reports  scripts  tasks
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd ..
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ cd ..
+yokkidack@yokkidack-VirtualBox:~$ ls
+Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos  yokkidack
+yokkidack@yokkidack-VirtualBox:~$ cd yokkidack/
+yokkidack@yokkidack-VirtualBox:~/yokkidack$ cd workspace/
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd reports/
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports$ ls
+lab04
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports$ cd lab04/
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab04$ ls
+REPORT.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab04$ edit REPORT.md 
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab04$ 

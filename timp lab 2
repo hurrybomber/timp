@@ -1,0 +1,228 @@
+## Laboratory work II
+
+Данная лабораторная работа посвещена изучению утилит для разработки проектов
+
+## Tasks
+
+- [ ] 1. Ознакомиться со ссылками учебного материала
+- [ ] 2. Выполнить инструкцию учебного материала
+- [ ] 3. Составить отчет и отправить ссылку личным сообщением в **Slack**
+
+## Tutorial
+
+```bash
+$ export GITHUB_USERNAME=<имя_пользователя>
+//создать константу с именем пользователя
+$ export GIST_TOKEN=<сохраненный_токен>
+//создать константу с токеном
+$ alias edit=<nano|vi|vim|subl>
+```
+
+```ShellSession
+$ mkdir -p ${GITHUB_USERNAME}/workspace
+//создать директорию ${GITHUB_USERNAME}/workspace
+//(${...} вставит содерживое констант внутри)
+// -p сделает так, чтобы если при создании директории возникнет ошибка, сообщение об этом не будет выведено
+$ cd ${GITHUB_USERNAME}/workspace
+// переходим в созданную директорию
+$ pwd
+// выведет путь к текущей директории
+$ cd ..
+// перейдет на один каталог выше
+$ pwd
+// выведет путь к текущей директории
+```
+
+```ShellSession
+$ mkdir -p workspace/tasks/
+$ mkdir -p workspace/projects/
+$ mkdir -p workspace/reports/
+
+//создать директории workspace/tasks/ , workspace/projects/ и workspace/reports/
+
+$ cd workspace
+
+//перейти в каталог workspace
+```
+
+```ShellSession
+# Debian
+$ wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+
+
+--2018-03-05 11:36:37--  https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+Распознаётся nodejs.org (nodejs.org)… 104.20.23.46, 104.20.22.46, 2400:cb00:2048:1::6814:172e, ...
+Подключение к nodejs.org (nodejs.org)|104.20.23.46|:443... соединение установлено.
+ОШИБКА: невозможно проверить сертификат nodejs.org, выпущенный «CN=COMODO RSA Domain Validation Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB»:
+Невозможно локально проверить подлинность запрашивающего.
+Для небезопасного подключения к nodejs.org используйте параметр «--no-check-certificate».
+
+> wget --no-check-certificate https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+
+--2018-03-05 12:07:04--  https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+Распознаётся nodejs.org (nodejs.org)… 104.20.22.46, 104.20.23.46, 2400:cb00:2048:1::6814:172e, ...
+Подключение к nodejs.org (nodejs.org)|104.20.22.46|:443... соединение установлено.
+ПРЕДУПРЕЖДЕНИЕ: невозможно проверить сертификат nodejs.org, выпущенный «CN=COMODO RSA Domain Validation Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB»:
+Невозможно локально проверить подлинность запрашивающего.
+HTTP-запрос отправлен. Ожидание ответа… 200 OK
+Длина: 9356460 (8,9M) [application/x-xz]
+Сохранение в: «node-v6.11.5-linux-x64.tar.xz»
+
+node-v6.11.5-linux- 100%[===================>]   8,92M   275KB/s    in 82s
+
+2018-03-05 12:08:28 (111 KB/s) - «node-v6.11.5-linux-x64.tar.xz» сохранён [9356460/9356460]
+
+// скачивает файлы с указанного адреса
+// ключ --no-check-certificate указывает wget'у чтобы он не проверял сертификат
+// без этого ключа проверка не получается и файл не скачивается
+
+$ tar -xf node-v6.11.5-linux-x64.tar.xz
+
+// tar распаковывает архив
+// -x указывает на то, что при распаковке на диск файлы с одинаковыми
+// именами будут распакованы и более поздние файлы будут записаны поверх
+// более старых
+
+$ rm -rf node-v6.11.5-linux-x64.tar.xz
+
+//rm удаляет директорию
+// -f не выведет ошибок если файла не существует
+// -r удалит все файлы связанные с удаляемым файлом
+
+$ mv node-v6.11.5-linux-x64 node
+
+// mv перемещает файлы из node-v6.11.5-linux-x64 в node
+```
+
+```ShellSession
+$ ls node/bin
+// ls выведет содерживое node/bin
+
+node    npm
+
+$ echo ${PATH}
+/Users/igor/perl5/bin:/Users/igor/perl5/perlbrew/bin:/Users/igor/perl5/
+perlbrew/perls/perl-5.16.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/
+sbin:/usr/local/share/dotnet:/opt/ImageMagick/bin:/Library/Frameworks/
+Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/
+Contents/MacOS
+
+// echo выведет в строку содерживое PATH
+
+$ export PATH=${PATH}:`pwd`/node/bin
+
+//  запись в PATH содерживого PATH, двоеточия, вывода команды pwd и "/node/bin"
+
+$ echo ${PATH}
+
+// echo выведет в строку содерживое PATH
+
+/Users/igor/perl5/bin:/Users/igor/perl5/perlbrew/bin:/Users/igor/perl5/
+perlbrew/perls/perl-5.16.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/
+sbin:/usr/local/share/dotnet:/opt/ImageMagick/bin:/Library/Frameworks/
+Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/
+Contents/MacOS:/Users/igor/yokkidack/workspace/workspace/node/bin
+
+$ mkdir scripts
+
+// создать директорию scripts
+
+$ cat > scripts/activate<<EOF
+export PATH=\${PATH}:`pwd`/node/bin
+EOF
+
+// cat выведет содержимое файла
+// ">" означает перенаправление вывода их строки в файл
+// "<<" указывает на то что считывание будет происходить до появления слова "EOF"
+
+
+$ source scripts/activate
+
+// source выполнит содержание файла
+```
+
+```ShellSession
+$ npm install -g gistup
+
+/Users/igor/yokkidack/workspace/workspace/node/bin/node:
+/Users/igor/yokkidack/workspace/workspace/node/bin/node:
+cannot execute binary file
+
+// должен был установить гист
+// указывает на то группу, разрешены цыферные идентификаторы группы
+$ ls node/bin
+// ls выведет содерживое node/bin
+
+node    npm
+
+
+```
+
+```ShellSession
+$ cat > ~/.gistup.json <<EOF
+{
+"token": "${GIST_TOKEN}"
+}
+EOF
+```
+
+## Report
+
+```ShellSession
+$ export LAB_NUMBER=02
+$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+$ mkdir reports/lab${LAB_NUMBER}
+$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+$ cd reports/lab${LAB_NUMBER}
+$ edit REPORT.md
+$ gistup -m "lab${LAB_NUMBER}"
+```
+
+## Links
+
+### Unix commands
+
+- [ar](https://en.wikipedia.org/wiki/Ar_(Unix))
+- [cat](https://en.wikipedia.org/wiki/Cat_(Unix))
+- [cd](https://en.wikipedia.org/wiki/Cd_(command))
+- [cp](https://en.wikipedia.org/wiki/Cp_(Unix))
+- [cut](https://en.wikipedia.org/wiki/Cut_(Unix))
+- [echo](https://en.wikipedia.org/wiki/Echo_(command))
+- [env](https://en.wikipedia.org/wiki/Env_(shell))
+- [ex](https://en.wikipedia.org/wiki/Ex_(editor))
+- [file](https://en.wikipedia.org/wiki/File_(command))
+- [find](https://en.wikipedia.org/wiki/Find)
+- [ls](https://en.wikipedia.org/wiki/Ls)
+- [man](https://en.wikipedia.org/wiki/Man_page)
+- [mkdir](https://en.wikipedia.org/wiki/Mkdir)
+- [mv](https://en.wikipedia.org/wiki/Mv)
+- [nm](https://en.wikipedia.org/wiki/Nm_(Unix))
+- [ps](https://en.wikipedia.org/wiki/Ps_(Unix))
+- [pwd](https://en.wikipedia.org/wiki/Pwd)
+- [rm](https://en.wikipedia.org/wiki/Rm_(Unix))
+- [sed](https://en.wikipedia.org/wiki/Sed)
+- [touch](https://en.wikipedia.org/wiki/Touch_(Unix))
+
+### Package Managers
+
+- [apt](http://help.ubuntu.ru/wiki/apt) | [dnf](https://en.wikipedia.org/wiki/DNF_(software)) | [yum](https://fedoraproject.org/wiki/Yum/ru)
+- [brew](https://brew.sh) | [linuxbrew](http://linuxbrew.sh)
+- [npm](https://docs.npmjs.com)
+
+### Software
+
+- [curl](https://www.gitbook.com/book/bagder/everything-curl/details)
+- [wget](https://www.gnu.org/software/wget/manual/wget.pdf)
+- [clang](https://clang.llvm.org)
+- [g++](https://gcc.gnu.org/onlinedocs/gcc-4.0.2/gcc/G_002b_002b-and-GCC.html)
+- [make](https://en.wikipedia.org/wiki/Make_(software))
+- [open](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/open.1.html)
+- [openssl](https://www.openssl.org)
+- [nano](https://www.nano-editor.org)
+- [tree](https://linux.die.net/man/1/tree)
+- [vim](http://www.vim.org)
+
+```
+Copyright (c) 2017 Братья Вершинины
+```
+

@@ -1,0 +1,267 @@
+## Laboratory work III
+
+Данная лабораторная работа посвещена изучению систем контроля версий на примере **Git**.
+
+```bash
+$ open https://git-scm.com
+```
+
+## Tasks
+
+- [ ] 1. Создать публичный репозиторий с названием **lab03** и с лиценцией **MIT**
+- [ ] 2. Ознакомиться со ссылками учебного материала
+- [ ] 3. Выполнить инструкцию учебного материала
+- [ ] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
+
+## Tutorial
+
+```ShellSession
+$ export GITHUB_USERNAME=<имя_пользователя>
+//создать константу с именем пользователя
+$ export GITHUB_EMAIL=<адрес_почтового_ящика>
+//слздать константу с адресом почты
+$ alias edit=<nano|vi|vim|subl>
+
+```
+
+```ShellSession
+$ cd ${GITHUB_USERNAME}/workspace
+// переходим в директорию <имя_пользователя>/workspace
+$ source scripts/activate
+// выполняем код из scripts/activate
+```
+
+```ShellSession
+$ mkdir projects/lab03 && cd projects/lab03
+// создаем и преходи в нее директорию projects/lab03
+$ git init
+
+Initialized empty Git repository in /Users/igor/yokkidack/workspace/workspace/projects/lab03/.git/
+
+// создает пустой репозиторий гит с расшинрением .git
+
+$ git config --global user.name ${GITHUB_USERNAME}
+
+// git coconfig позволяет настраивать и просматривать параметры, контролирующие все аспекты работы //Git’а, а также его внешний вид.
+
+// указывая --global показываем чтобы Git использовал эти данные для всего, что мы делаем в
+// этой системе
+
+$ git config --global user.email ${GITHUB_EMAIL}
+$ git config -e --global
+
+//-e открывает редактор с настройками
+
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab03.git
+//git remote чтобы просмотреть, какие удалённые серверы у нас уже настроены, следует выполнить ///команду
+//Для того чтобы начать отслеживать (добавить под версионный контроль) новый файл, используется команда git add
+
+$ git pull origin master
+// из-за плохого соединения эта команда выполнилась с 6 раза
+fatal: unable to access 'https://github.com/yokkidack/lab03.git/': Could not resolve host: github.com
+
+
+Username for 'https://github.com': yokkidack
+Password for 'https://yokkidack@github.com':
+
+// было еще такое:
+remote: Invalid username or password.
+$ touch README.md
+// создать файл README.md
+$ git status
+
+On branch master
+
+Initial commit
+
+Untracked files:
+(use "git add <file>..." to include in what will be committed)
+
+README.md
+
+// вывод статуса файлов в директории
+$ git add README.md
+$ git commit -m"added README.md"
+
+master (root-commit) 4e089c8] added README.md
+1 file changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 README.md
+
+$ git push origin master
+```
+
+Добавить на сервисе **GitHub** в репозитории **lab03** файл **.gitignore**
+со следующем содержимом:
+
+```ShellSession
+*build*/
+*install*/
+*.swp
+.idea/
+```
+
+```ShellSession
+$ git pull origin master // получение ветки master в origin
+
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/yokkidack/lab03
+* branch            master     -> FETCH_HEAD
+4e089c8..621bbb3  master     -> origin/master
+Updating 4e089c8..621bbb3
+Fast-forward
+.gitignore | 4 ++++
+1 file changed, 4 insertions(+)
+create mode 100644 .gitignore
+
+$ git log // вывести список изменений
+commit 621bbb344c204b012ab1090c678f591c5a459649 (HEAD -> master, origin/master)
+Author: yokkidack <mosgreyday@gmail.com>
+Date:   Thu Mar 15 19:07:08 2018 +0300
+
+Create .gitignore
+
+commit 4e089c8954d176c43c243e47ee221e1049cc981d
+Author: yokkidack <mosgreyday@gmail.com>
+Date:   Thu Mar 15 19:05:04 2018 +0300
+
+added README.md
+
+```
+
+```ShellSession
+$ mkdir sources // создать директорию sources
+$ mkdir include // создать директорию include
+$ mkdir examples // создать директорию examples
+$ cat > sources/print.cpp <<EOF
+#include <print.hpp>
+
+void print(const std::string& text, std::ostream& out) {
+  out << text;
+}
+
+void print(const std::string& text, std::ofstream& out) {
+  out << text;
+}
+EOF
+
+// записать в файл sources/print.cpp код до последовательности "EOF"
+```
+
+```ShellSession
+$ cat > include/print.hpp <<EOF
+#include <string>
+#include <fstream>
+#include <iostream>
+
+void print(const std::string& text, std::ostream& out = std::cout);
+void print(const std::string& text, std::ofstream& out);
+EOF
+// записать в файл include/print.hpp код до последовательности "EOF"
+
+```
+
+```ShellSession
+$ cat > examples/example1.cpp <<EOF
+#include <print.hpp>
+
+int main(int argc, char** argv) {
+  print("hello");
+}
+EOF
+// записать в файл examples/example1.cpp код до последовательности "EOF"
+
+```
+
+```ShellSession
+$ cat > examples/example2.cpp <<EOF
+#include <fstream>
+#include <print.hpp>
+
+int main(int argc, char** argv) {
+  std::ofstream file("log.txt");
+  print(std::string("hello"), file);
+}
+EOF
+
+// записать в файл examples/example2.cpp код до последовательности "EOF"
+
+```
+
+```ShellSession
+$ edit README.md // редактировать README.md
+```
+
+```ShellSession
+$ git status //вывод статуса
+
+On branch master
+Changes not staged for commit:
+(use "git add <file>..." to update what will be committed)
+(use "git checkout -- <file>..." to discard changes in working directory)
+
+modified:   README.md
+
+Untracked files:
+(use "git add <file>..." to include in what will be committed)
+
+examples/
+include/
+sources/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add . // добавить (начать отслеживать) все файлы из директории
+$ git commit -m"added sources" // создать коммит, -m позволяет добавить сообщение
+
+[master a18801c] added sources
+5 files changed, 26 insertions(+)
+create mode 100644 examples/example1.cpp
+create mode 100644 examples/example2.cpp
+create mode 100644 include/print.hpp
+create mode 100644 sources/print.cpp
+
+$ git push origin master // отправление ветки master в origin
+
+Counting objects: 10, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (10/10), 950 bytes | 950.00 KiB/s, done.
+Total 10 (delta 0), reused 0 (delta 0)
+To https://github.com/yokkidack/lab03.git
+621bbb3..a18801c  master -> master
+
+```
+
+## Report
+
+```ShellSession
+$ cd ~/workspace/labs/ //перейти в ~/workspace/labs/
+$ export LAB_NUMBER=03  // созданеи переменной LAB_NUMBER во значение 03
+$ git clone https://github.com/tp-labs/lab${LAB_NUMBER}.git tasks/lab${LAB_NUMBER}
+
+Cloning into 'tasks/lab03'...
+remote: Counting objects: 53, done.
+remote: Total 53 (delta 0), reused 0 (delta 0), pack-reused 53
+Unpacking objects: 100% (53/53), done.
+
+
+$ mkdir reports/lab${LAB_NUMBER}
+$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md // скопировать tasks/lab${LAB_NUMBER}/README.md в reports/lab${LAB_NUMBER}/REPORT.md
+$ cd reports/lab${LAB_NUMBER} // перейти в /lab${LAB_NUMBER}
+$ edit REPORT.md    //редактриование REPORT.md
+$ gistup -m "lab${LAB_NUMBER}" // создание gistup
+```
+
+## Links
+
+- [GitHub](https://github.com)
+- [Bitbucket](https://bitbucket.org)
+- [Gitlab](https://about.gitlab.com)
+- [LearnGitBranching](http://learngitbranching.js.org/)
+
+```
+Copyright (c) 2017 Братья Вершинины
+```
