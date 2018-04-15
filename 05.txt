@@ -1,0 +1,275 @@
+yokkidack@yokkidack-VirtualBox:~$ export GITHUB_USERNAME=yokkidack
+yokkidack@yokkidack-VirtualBox:~$ export GITHUB_TOKEN=07681cc205da414c0d7ea7ddd43361b753719928
+yokkidack@yokkidack-VirtualBox:~$ cd ${GITHUB_USERNAME}/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ pushd .
+~/yokkidack/workspace ~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ source scripts/activate
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+Turning on ignore dotfiles mode.
+Downloading https://github.com/rvm/rvm/archive/master.tar.gz
+Upgrading the RVM installation in /home/yokkidack/.rvm/
+Upgrade of RVM in /home/yokkidack/.rvm/ is complete.
+  * No new notes to display.
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ echo "source $HOME/.rvm/scripts/rvm" >> scripts/activate
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ rvm autolibs disable
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ rvm install ruby-2.4.2
+Searching for binary rubies, this might take some time.
+No binary rubies available for: ubuntu/17.10/x86_64/ruby-2.4.2.
+Continuing with compilation. Please read 'rvm help mount' to get more information on binary rubies.
+Installing Ruby from source to: /home/yokkidack/.rvm/rubies/ruby-2.4.2, this may take a while depending on your cpu(s)...
+ruby-2.4.2 - #downloading ruby-2.4.2, this may take a while depending on your connection...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 12.0M  100 12.0M    0     0  4103k      0  0:00:03  0:00:03 --:--:-- 3131k
+ruby-2.4.2 - #extracting ruby-2.4.2 to /home/yokkidack/.rvm/src/ruby-2.4.2.....
+ruby-2.4.2 - #configuring..................................................................
+ruby-2.4.2 - #post-configuration..
+ruby-2.4.2 - #compiling....................................................................................................................
+ruby-2.4.2 - #installing............
+ruby-2.4.2 - #making binaries executable..
+ruby-2.4.2 - #downloading rubygems-2.7.6
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  832k  100  832k    0     0   416k      0  0:00:02  0:00:02 --:--:--  372k
+ruby-2.4.2 - #extracting rubygems-2.7.6.....
+ruby-2.4.2 - #removing old rubygems........
+ruby-2.4.2 - #installing rubygems-2.7.6..........................
+ruby-2.4.2 - #gemset created /home/yokkidack/.rvm/gems/ruby-2.4.2@global
+ruby-2.4.2 - #importing gemset /home/yokkidack/.rvm/gemsets/global.gems.............................................
+ruby-2.4.2 - #generating global wrappers.......
+ruby-2.4.2 - #gemset created /home/yokkidack/.rvm/gems/ruby-2.4.2
+ruby-2.4.2 - #importing gemsetfile /home/yokkidack/.rvm/gemsets/default.gems evaluated to empty gem list
+ruby-2.4.2 - #generating default wrappers.......
+ruby-2.4.2 - #adjusting #shebangs for (gem irb erb ri rdoc testrb rake).
+Install of ruby-2.4.2 - #complete 
+Ruby was built without documentation, to build it run: rvm docs generate-ri
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ rvm use 2.4.2 --default
+Using /home/yokkidack/.rvm/gems/ruby-2.4.2
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ gem install travis
+Fetching: multipart-post-2.0.0.gem (100%)
+Successfully installed multipart-post-2.0.0
+Fetching: faraday-0.14.0.gem (100%)
+Successfully installed faraday-0.14.0
+Fetching: faraday_middleware-0.12.2.gem (100%)
+Successfully installed faraday_middleware-0.12.2
+Fetching: highline-1.7.10.gem (100%)
+Successfully installed highline-1.7.10
+Fetching: backports-3.11.2.gem (100%)
+Successfully installed backports-3.11.2
+Fetching: multi_json-1.13.1.gem (100%)
+Successfully installed multi_json-1.13.1
+Fetching: addressable-2.4.0.gem (100%)
+Successfully installed addressable-2.4.0
+Fetching: net-http-persistent-2.9.4.gem (100%)
+Successfully installed net-http-persistent-2.9.4
+Fetching: net-http-pipeline-1.0.1.gem (100%)
+Successfully installed net-http-pipeline-1.0.1
+Fetching: gh-0.15.1.gem (100%)
+Successfully installed gh-0.15.1
+Fetching: launchy-2.4.3.gem (100%)
+Successfully installed launchy-2.4.3
+Fetching: ffi-1.9.23.gem (100%)
+Building native extensions. This could take a while...
+Successfully installed ffi-1.9.23
+Fetching: ethon-0.11.0.gem (100%)
+Successfully installed ethon-0.11.0
+Fetching: typhoeus-0.8.0.gem (100%)
+Successfully installed typhoeus-0.8.0
+Fetching: websocket-1.2.5.gem (100%)
+Successfully installed websocket-1.2.5
+Fetching: pusher-client-0.6.2.gem (100%)
+Successfully installed pusher-client-0.6.2
+Fetching: travis-1.8.8.gem (100%)
+Successfully installed travis-1.8.8
+invalid options: -SHN
+(invalid options are ignored)
+Parsing documentation for multipart-post-2.0.0
+Installing ri documentation for multipart-post-2.0.0
+Parsing documentation for faraday-0.14.0
+Installing ri documentation for faraday-0.14.0
+Parsing documentation for faraday_middleware-0.12.2
+Installing ri documentation for faraday_middleware-0.12.2
+Parsing documentation for highline-1.7.10
+Installing ri documentation for highline-1.7.10
+Parsing documentation for backports-3.11.2
+Installing ri documentation for backports-3.11.2
+Parsing documentation for multi_json-1.13.1
+Installing ri documentation for multi_json-1.13.1
+Parsing documentation for addressable-2.4.0
+Installing ri documentation for addressable-2.4.0
+Parsing documentation for net-http-persistent-2.9.4
+Installing ri documentation for net-http-persistent-2.9.4
+Parsing documentation for net-http-pipeline-1.0.1
+Installing ri documentation for net-http-pipeline-1.0.1
+Parsing documentation for gh-0.15.1
+Installing ri documentation for gh-0.15.1
+Parsing documentation for launchy-2.4.3
+Installing ri documentation for launchy-2.4.3
+Parsing documentation for ffi-1.9.23
+Installing ri documentation for ffi-1.9.23
+Parsing documentation for ethon-0.11.0
+Installing ri documentation for ethon-0.11.0
+Parsing documentation for typhoeus-0.8.0
+Installing ri documentation for typhoeus-0.8.0
+Parsing documentation for websocket-1.2.5
+Installing ri documentation for websocket-1.2.5
+Parsing documentation for pusher-client-0.6.2
+Installing ri documentation for pusher-client-0.6.2
+Parsing documentation for travis-1.8.8
+Installing ri documentation for travis-1.8.8
+Done installing documentation for multipart-post, faraday, faraday_middleware, highline, backports, multi_json, addressable, net-http-persistent, net-http-pipeline, gh, launchy, ffi, ethon, typhoeus, websocket, pusher-client, travis after 17 seconds
+17 gems installed
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/${GITHUB_USERNAME}/lab04 projects/lab05
+fatal: destination path 'projects/lab05' already exists and is not an empty directory.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/${GITHUB_USERNAME}/lab04 projects/lab05
+Cloning into 'projects/lab05'...
+remote: Counting objects: 28, done.
+remote: Compressing objects: 100% (18/18), done.
+remote: Total 28 (delta 5), reused 26 (delta 4), pack-reused 0
+Unpacking objects: 100% (28/28), done.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd projects/lab05
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ git remote remove origin
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab05
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ cat > .travis.yml <<EOF
+> language: cpp
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ cat >> .travis.yml <<EOF
+> 
+> script:
+> - cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+> - cmake --build _build
+> - cmake --build _build --target install
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ cat >> .travis.yml <<EOF
+> 
+> addons:
+>   apt:
+>     sources:
+>       - george-edison55-precise-backports
+>     packages:
+>       - cmake
+>       - cmake-data
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis login --github-token ${GITHUB_TOKEN}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis lintWarnings for .travis.yml:
+[x] value for addons section is empty, dropping
+[x] in addons section: unexpected key apt, dropping
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ ex -sc '1i|[![Build Status](https://travis-ci.org/yokkidack/lab05.svg?branch=master)](https://travis-ci.org/yokkidack/lab05)' -cx README.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ git add .travis.yml
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ git add README.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ git commit -m"added CI"
+[master 0eeafd7] added CI
+ 2 files changed, 15 insertions(+)
+ create mode 100644 .travis.yml
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ git push origin master
+Username for 'https://github.com': yokkidack
+Password for 'https://yokkidack@github.com': 
+To https://github.com/yokkidack/lab05
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/yokkidack/lab05'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis lint
+Warnings for .travis.yml:
+[x] value for addons section is empty, dropping
+[x] in addons section: unexpected key apt, dropping
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis accounts
+yokkidack (Yokkidack): subscribed, 11 repositories
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis sync
+synchronizing: ... done
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis repos
+yokkidack/BSTree (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/FList (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/forlulz (active: no, admin: yes, push: yes, pull: yes)
+Description: Im gonna do some uncool things while learning stuff. enjoy
+
+yokkidack/lab03 (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/lab04 (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/lab05 (active: yes, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/lapki (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/off (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/timp (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/vector_example (active: yes, admin: yes, push: yes, pull: yes)
+Description: ???
+
+yokkidack/vershinin (active: no, admin: yes, push: yes, pull: yes)
+Description: ???
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis enable
+Detected repository as yokkidack/lab05, is this correct? |yes| y
+yokkidack/lab05: enabled :)
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis whatsup
+yokkidack/lab05 passed: #1
+yokkidack/vector_example passed: #26yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ clean
+No command 'clean' found, did you mean:
+ Command 'uclean' from package 'svn-buildpackage' (universe)
+ Command 'clear' from package 'ncurses-bin' (main)
+ Command 'pclean' from package 'pbuilder-scripts' (universe)
+clean: command not found
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ clear
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis branches
+master:  #1    passed     added CI
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis history
+#1 passed:       master added CI
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ travis show
+Job #1.1:  added CI
+State:         passed
+Type:          push
+Branch:        master
+Compare URL:   https://github.com/yokkidack/lab05/compare/4e089c8954d1^...f34dbb5688da
+Duration:      41 sec
+Started:       2018-04-15 14:38:57
+Finished:      2018-04-15 14:39:38
+Allow Failure: false
+Config:        os: linux
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab05$ popd
+~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ export LAB_NUMBER=05
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+fatal: destination path 'tasks/lab05' already exists and is not an empty directory.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+Cloning into 'tasks/lab05'...
+remote: Counting objects: 47, done.
+remote: Total 47 (delta 0), reused 0 (delta 0), pack-reused 47
+Unpacking objects: 100% (47/47), done.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ mkdir reports/lab${LAB_NUMBER}
+mkdir: cannot create directory ‘reports/lab05’: File exists
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ mkdir reports/lab${LAB_NUMBER}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd reports/lab${LAB_NUMBER}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab05$ edit REPORT.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab05$ gistup -m "lab${LAB_NUMBER}"
+Initialized empty Git repository in /home/yokkidack/yokkidack/workspace/reports/lab05/.git/
+[master (root-commit) 7482eb8] Initial gistup commit.
+ 1 file changed, 131 insertions(+)
+ create mode 100644 REPORT.md
+gist 9ba62a44275cbea7434614b4d709050a created!
+https://gist.github.com/9ba62a44275cbea7434614b4d709050a
+Enter passphrase for key '/home/yokkidack/.ssh/id_rsa': 
+To gist.github.com:9ba62a44275cbea7434614b4d709050a.git
+ + 554ab9f...7482eb8 master -> master (forced update)
+Branch master set up to track remote branch master from origin.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab05$ 
+
+
+
