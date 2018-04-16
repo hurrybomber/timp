@@ -1,0 +1,296 @@
+yokkidack@yokkidack-VirtualBox:~$ export GITHUB_USERNAME=yokkidack
+yokkidack@yokkidack-VirtualBox:~$ alias gsed=sed
+yokkidack@yokkidack-VirtualBox:~$ cd ${GITHUB_USERNAME}/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ pushd .
+~/yokkidack/workspace ~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ source scripts/activate
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/${GITHUB_USERNAME}/lab05 projects/lab06
+Cloning into 'projects/lab06'...
+remote: Counting objects: 32, done.
+remote: Compressing objects: 100% (20/20), done.
+remote: Total 32 (delta 6), reused 32 (delta 6), pack-reused 0
+Unpacking objects: 100% (32/32), done.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd projects/lab06
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ git remote remove origin
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab06
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ mkdir tests
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ wget https://github.com/philsquared/Catch/releases/download/v1.9.3/catch.hpp -O tests/catch.hpp
+--2018-04-16 10:14:19--  https://github.com/philsquared/Catch/releases/download/v1.9.3/catch.hpp
+Resolving github.com (github.com)... 192.30.253.112, 192.30.253.113
+Connecting to github.com (github.com)|192.30.253.112|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://github.com/catchorg/Catch2/releases/download/v1.9.3/catch.hpp [following]
+--2018-04-16 10:14:21--  https://github.com/catchorg/Catch2/releases/download/v1.9.3/catch.hpp
+Reusing existing connection to github.com:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github-production-release-asset-2e65be.s3.amazonaws.com/1062572/61afa568-29c4-11e7-9755-a1211db07475?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180416%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20180416T071421Z&X-Amz-Expires=300&X-Amz-Signature=44670b9fbeb5e8c0de2aa07b0e413d3244a7af27cd5e9f433b3ef3b5f2fd5d3c&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Dcatch.hpp&response-content-type=application%2Foctet-stream [following]
+--2018-04-16 10:14:21--  https://github-production-release-asset-2e65be.s3.amazonaws.com/1062572/61afa568-29c4-11e7-9755-a1211db07475?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180416%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20180416T071421Z&X-Amz-Expires=300&X-Amz-Signature=44670b9fbeb5e8c0de2aa07b0e413d3244a7af27cd5e9f433b3ef3b5f2fd5d3c&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Dcatch.hpp&response-content-type=application%2Foctet-stream
+Resolving github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)... 52.216.80.136
+Connecting to github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)|52.216.80.136|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 417675 (408K) [application/octet-stream]
+Saving to: ‘tests/catch.hpp’
+
+tests/catch.hpp           100%[=====================================>] 407,89K  30,5KB/s    in 14s     
+
+2018-04-16 10:14:37 (29,3 KB/s) - ‘tests/catch.hpp’ saved [417675/417675]
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cat > tests/main.cpp <<EOF
+> #define CATCH_CONFIG_MAIN
+> #include "catch.hpp"
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ gsed -i '/option(BUILD_EXAMPLES "Build examples" OFF)/a\
+> option(BUILD_TESTS "Build tests" OFF)
+> ' CMakeLists.txt
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cat >> CMakeLists.txt <<EOF
+> 
+> if(BUILD_TESTS)
+> enable_testing()
+> file(GLOB \${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
+> add_executable(check \${\${PROJECT_NAME}_TEST_SOURCES})
+> target_link_libraries(check \${PROJECT_NAME} \${DEPENDS_LIBRARIES})
+> add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
+> endif()
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ clear
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cat >> tests/test1.cpp <<EOF
+> #include "catch.hpp"
+> #include <print.hpp>
+> 
+> TEST_CASE("output values should match input values", "[file]") {
+>   std::string text = "hello";
+>   std::ofstream out("file.txt");
+>   
+>   print(text, out);
+>   out.close();
+>   
+>   std::string result;
+>   std::ifstream in("file.txt");
+>   in >> result;
+>   
+>   REQUIRE(result == text);
+> }
+> EOF
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cmake -H. -B_build -DBUILD_TESTS=ON-- The C compiler identification is GNU 7.2.0
+-- The CXX compiler identification is GNU 7.2.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/yokkidack/yokkidack/workspace/projects/lab06/_build
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cmake --build _build
+Scanning dependencies of target print
+[ 20%] Building CXX object CMakeFiles/print.dir/sources/print.cpp.o
+[ 40%] Linking CXX static library libprint.a
+[ 40%] Built target print
+Scanning dependencies of target check
+[ 60%] Building CXX object CMakeFiles/check.dir/tests/main.cpp.o
+[ 80%] Building CXX object CMakeFiles/check.dir/tests/test1.cpp.o
+[100%] Linking CXX executable check
+[100%] Built target check
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cmake --build _build --target test
+Running tests...
+Test project /home/yokkidack/yokkidack/workspace/projects/lab06/_build
+    Start 1: check
+1/1 Test #1: check ............................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.00 sec
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ _build/check -s -r compact
+/home/yokkidack/yokkidack/workspace/projects/lab06/tests/test1.cpp:15: passed: result == text for: "hello" == "hello"
+Passed 1 test case with 1 assertion.
+
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ cmake --build _build --target test -- ARGS=--verbose 
+Running tests...
+UpdateCTestConfiguration  from :/home/yokkidack/yokkidack/workspace/projects/lab06/_build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/home/yokkidack/yokkidack/workspace/projects/lab06/_build/DartConfiguration.tcl
+Test project /home/yokkidack/yokkidack/workspace/projects/lab06/_build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: check
+
+1: Test command: /home/yokkidack/yokkidack/workspace/projects/lab06/_build/check "-s" "-r" "compact" "--use-colour" "yes"
+1: Test timeout computed to be: 9.99988e+06
+1: /home/yokkidack/yokkidack/workspace/projects/lab06/tests/test1.cpp:15: passed: result == text for: "hello" == "hello"
+1: Passed 1 test case with 1 assertion.
+1: 
+1/1 Test #1: check ............................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.01 sec
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ gsed -i 's/lab05/lab06/g' README.mdyokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ gsed -i 's/\(DCMAKE_INSTALL_PREFIX=_install\)/\1 -DBUILD_TESTS=ON/' .travis.yml
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ gsed -i '/cmake --build _build --target install/a\
+> - cmake --build _build --target test -- ARGS=--verbose
+> ' .travis.yml
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ travis lint
+Warnings for .travis.yml:
+[x] value for addons section is empty, dropping
+[x] in addons section: unexpected key apt, dropping
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ git add .
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ git commit -m"added tests"
+[master 07629b0] added tests
+ 7 files changed, 11506 insertions(+), 2 deletions(-)
+ create mode 100644 file.txt
+ create mode 100644 tests/catch.hpp
+ create mode 100644 tests/main.cpp
+ create mode 100644 tests/test1.cpp
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ git push origin master
+Username for 'https://github.com': yokkidack
+Password for 'https://yokkidack@github.com': 
+Counting objects: 42, done.
+Compressing objects: 100% (34/34), done.
+Writing objects: 100% (42/42), 88.54 KiB | 4.22 MiB/s, done.
+Total 42 (delta 10), reused 0 (delta 0)
+remote: Resolving deltas: 100% (10/10), done.
+To https://github.com/yokkidack/lab06
+ * [new branch]      master -> master
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ travis login --auto
+We need your GitHub login to identify you.
+This information will not be sent to Travis CI, only to api.github.com.
+The password will not be displayed.
+
+Try running with --github-token or --auto if you don't want to enter your password anyway.
+
+Username: yokkidack
+Password for yokkidack: ********
+Successfully logged in as yokkidack!
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ travis enable
+Detected repository as yokkidack/lab06, is this correct? |yes| y
+yokkidack/lab06: enabled :)
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ mkdir artifacts
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sleep 20s && gnome-screenshot --file artifacts/screenshot.png
+The program 'gnome-screenshot' is currently not installed. You can install it by typing:
+sudo apt install gnome-screenshot
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sudo apt-get gnome-screenshot
+[sudo] password for yokkidack: 
+E: Invalid operation gnome-screenshot
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sudo install  gnome-screenshot
+install: missing destination file operand after 'gnome-screenshot'
+Try 'install --help' for more information.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sudo install gnome-screenshot
+install: missing destination file operand after 'gnome-screenshot'
+Try 'install --help' for more information.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ apt-get gnome-screenshot
+E: Invalid operation gnome-screenshot
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ gnome-screenshot
+The program 'gnome-screenshot' is currently not installed. You can install it by typing:
+sudo apt install gnome-screenshot
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sudo apt install gnome-screenshot
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  gnome-screenshot
+0 upgraded, 1 newly installed, 0 to remove and 49 not upgraded.
+Need to get 52,5 kB of archives.
+After this operation, 283 kB of additional disk space will be used.
+Get:1 https://lbpfs.bmstu.ru:8003/index.php?zone=bmstu_lb&redirurl=http://ru.archive.ubuntu.com/ubuntu artful/main amd64 gnome-screenshot amd64 3.25.0-0ubuntu2 [52,5 kB]
+Err:1 https://lbpfs.bmstu.ru:8003/index.php?zone=bmstu_lb&redirurl=http://ru.archive.ubuntu.com/ubuntu artful/main amd64 gnome-screenshot amd64 3.25.0-0ubuntu2
+  Hash Sum mismatch
+  Hashes of expected file:
+   - SHA256:1a2bbc72fded27572adc52212d7d6754e72ae4c62eb2ee55d0cf4ba65f29820e
+   - SHA1:bf2c73a9874ea8b323e62ad3627d1bc11f431769 [weak]
+   - MD5Sum:8e9c4449d7cee335d085638b3547e7e4 [weak]
+   - Filesize:52508 [weak]
+  Hashes of received file:
+   - SHA256:b242370297209653af15835ed5c8b4378775aa4cca2f68a0d5a25abd0936e5ff
+   - SHA1:aa9c05e91f84931f4a4a1f08611a2b01be31770a [weak]
+   - MD5Sum:b4b9c3645c289b768eceb14ace756bca [weak]
+   - Filesize:4336 [weak]
+  Last modification reported: Mon, 16 Apr 2018 07:28:30 +0000
+Fetched 4 336 B in 13s (323 B/s)
+E: Failed to fetch https://lbpfs.bmstu.ru:8003/index.php?zone=bmstu_lb&redirurl=http://ru.archive.ubuntu.com/ubuntu/pool/main/g/gnome-screenshot/gnome-screenshot_3.25.0-0ubuntu2_amd64.deb  Hash Sum mismatch
+   Hashes of expected file:
+    - SHA256:1a2bbc72fded27572adc52212d7d6754e72ae4c62eb2ee55d0cf4ba65f29820e
+    - SHA1:bf2c73a9874ea8b323e62ad3627d1bc11f431769 [weak]
+    - MD5Sum:8e9c4449d7cee335d085638b3547e7e4 [weak]
+    - Filesize:52508 [weak]
+   Hashes of received file:
+    - SHA256:b242370297209653af15835ed5c8b4378775aa4cca2f68a0d5a25abd0936e5ff
+    - SHA1:aa9c05e91f84931f4a4a1f08611a2b01be31770a [weak]
+    - MD5Sum:b4b9c3645c289b768eceb14ace756bca [weak]
+    - Filesize:4336 [weak]
+   Last modification reported: Mon, 16 Apr 2018 07:28:30 +0000
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sudo apt install gnome-screenshot
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  gnome-screenshot
+0 upgraded, 1 newly installed, 0 to remove and 49 not upgraded.
+Need to get 52,5 kB of archives.
+After this operation, 283 kB of additional disk space will be used.
+Err:1 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 gnome-screenshot amd64 3.25.0-0ubuntu2
+  Temporary failure resolving 'ru.archive.ubuntu.com'
+E: Failed to fetch http://ru.archive.ubuntu.com/ubuntu/pool/main/g/gnome-screenshot/gnome-screenshot_3.25.0-0ubuntu2_amd64.deb  Temporary failure resolving 'ru.archive.ubuntu.com'
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sudo apt install gnome-screenshot
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  gnome-screenshot
+0 upgraded, 1 newly installed, 0 to remove and 49 not upgraded.
+Need to get 52,5 kB of archives.
+After this operation, 283 kB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu artful/main amd64 gnome-screenshot amd64 3.25.0-0ubuntu2 [52,5 kB]
+Fetched 52,5 kB in 1s (41,7 kB/s)           
+Selecting previously unselected package gnome-screenshot.
+(Reading database ... 178835 files and directories currently installed.)
+Preparing to unpack .../gnome-screenshot_3.25.0-0ubuntu2_amd64.deb ...
+Unpacking gnome-screenshot (3.25.0-0ubuntu2) ...
+Processing triggers for mime-support (3.60ubuntu1) ...
+Processing triggers for desktop-file-utils (0.23-1ubuntu3) ...
+Processing triggers for libglib2.0-0:amd64 (2.54.1-1ubuntu1) ...
+Setting up gnome-screenshot (3.25.0-0ubuntu2) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ sleep 20s && gnome-screenshot --file artifacts/screenshot.png
+
+** (gnome-screenshot:13913): WARNING **: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
+** Message: Unable to use GNOME Shell's builtin screenshot interface, resorting to fallback X11.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ for macOS: $ screencapture -T 20 artifacts/screenshot.png
+bash: syntax error near unexpected token `$'
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ open https://github.com/${GITHUB_USERNAME}/lab06
+Couldn't get a file descriptor referring to the console
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/projects/lab06$ popd
+~/yokkidack/workspace
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ export LAB_NUMBER=06
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+Cloning into 'tasks/lab06'...
+remote: Counting objects: 77, done.
+remote: Total 77 (delta 0), reused 0 (delta 0), pack-reused 77
+Unpacking objects: 100% (77/77), done.
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ mkdir reports/lab${LAB_NUMBER}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace$ cd reports/lab${LAB_NUMBER}
+yokkidack@yokkidack-VirtualBox:~/yokkidack/workspace/reports/lab06$ gistup -m "lab${LAB_NUMBER}"
+Initialized empty Git repository in /home/yokkidack/yokkidack/workspace/reports/lab06/.git/
+[master (root-commit) 1fe1408] Initial gistup commit.
+ 1 file changed, 143 insertions(+)
+ create mode 100644 REPORT.md
+gist 8252a55d4ce89bd88b85a948ebcbacab created!
+https://gist.github.com/8252a55d4ce89bd88b85a948ebcbacab
+Enter passphrase for key '/home/yokkidack/.ssh/id_rsa': 
+To gist.github.com:8252a55d4ce89bd88b85a948ebcbacab.git
+ + fe526e1...1fe1408 master -> master (forced update)
+Branch master set up to track remote branch master from origin.
+
